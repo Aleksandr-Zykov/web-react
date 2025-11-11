@@ -1,0 +1,106 @@
+@use '../abstracts' as abs;
+
+.cards {
+  display: grid;
+  gap: abs.$space-6;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.cards--compact {
+  gap: abs.$space-4;
+}
+
+.cards--compact .card {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: abs.$space-4;
+  align-items: stretch;
+}
+
+.cards--compact .card__media {
+  grid-row: 1 / -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards--compact .card__body {
+  padding: abs.$space-4 abs.$space-4 abs.$space-2;
+}
+
+.cards--compact .card__meta {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  @include abs.card(0);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.card__media {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card__body {
+  display: grid;
+  gap: abs.$space-3;
+  padding: abs.$space-4;
+}
+
+.card__title {
+  margin: 0;
+  font-size: abs.rem(20);
+  line-height: 1.35;
+  color: var(--fg);
+}
+
+.card__excerpt {
+  margin: 0;
+  color: var(--fg-muted);
+}
+
+.card__meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: abs.$space-4;
+  padding: abs.$space-4;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, #fff 8%);
+}
+
+.card__date {
+  color: var(--fg-muted);
+  font-size: 0.95rem;
+}
+
+.card__link {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+  @include abs.transition((color, transform));
+}
+
+.card__link:hover,
+.card__link:focus-visible {
+  color: var(--brand-600);
+  text-decoration: underline;
+}
+
+.card__link:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card__meta {
+    background: color-mix(in srgb, var(--surface) 92%, #fff 8%);
+  }
+}

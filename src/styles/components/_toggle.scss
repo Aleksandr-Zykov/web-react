@@ -1,0 +1,44 @@
+@use '../abstracts' as abs;
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: abs.$space-3;
+  padding: abs.$space-2 abs.$space-3;
+  border-radius: abs.$radius-2;
+  background: color-mix(in srgb, var(--surface) 92%, #fff 8%);
+  border: 1px solid var(--border);
+}
+
+.toggle__status {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.toggle__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: abs.$space-2;
+  padding: abs.$space-2 abs.$space-4;
+  border-radius: abs.$radius-1;
+  border: 1px solid transparent;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  @include abs.transition((background, transform));
+}
+
+.toggle__btn:hover,
+.toggle__btn:focus-visible {
+  background: var(--brand-600);
+}
+
+.toggle__btn:focus-visible {
+  @include abs.focus-ring(abs.$color-brand);
+}
+
+.toggle__btn:active {
+  transform: translateY(1px);
+}

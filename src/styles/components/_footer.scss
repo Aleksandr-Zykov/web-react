@@ -1,0 +1,35 @@
+@use '../abstracts' as abs;
+
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: abs.$space-6 abs.$space-4;
+}
+
+.footer__inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: abs.$space-4;
+}
+
+.footer__brand,
+.footer__text {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--fg-muted);
+}
+
+.footer__brand {
+  font-weight: 600;
+  color: var(--brand);
+}
+
+@include abs.respond(abs.$breakpoint-sm) {
+  .footer {
+    padding: abs.$space-6 abs.$space-6;
+  }
+}

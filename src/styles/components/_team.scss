@@ -12,6 +12,57 @@
   color: var(--brand);
 }
 
+.team__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: abs.$space-3;
+}
+
+.team__controls {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: abs.$space-3;
+}
+
+.team__search {
+  display: flex;
+  flex-direction: column;
+  gap: abs.rem(6);
+  min-width: min(320px, 100%);
+}
+
+.team__search-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+}
+
+.team__search-input {
+  width: 100%;
+  padding: abs.$space-2 abs.$space-3;
+  border-radius: abs.$radius-1;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--fg);
+  @include abs.transition(border-color);
+}
+
+.team__search-input:focus-visible {
+  border-color: var(--brand);
+  @include abs.focus-ring();
+}
+
+.team__status {
+  margin: abs.$space-4 0;
+  color: var(--fg-muted);
+}
+
+.team__status--error {
+  color: #f87171;
+}
+
 .team__list {
   display: grid;
   gap: abs.$space-4;
@@ -19,7 +70,11 @@
 }
 
 .employee-card {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  overflow: hidden;
+  @include abs.card(0);
 }
 
 .employee-card__photo {
@@ -49,4 +104,34 @@
 
 .employee-card__cta {
   align-self: flex-start;
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+  @include abs.transition((color, transform));
+}
+
+.employee-card__meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: abs.$space-3;
+  padding: abs.$space-4;
+  border-top: 1px solid var(--border);
+  background: var(--brand-meta);
+  font-size: 0.95rem;
+}
+
+.employee-card__email {
+  color: var(--fg-muted);
+}
+
+.employee-card__cta:hover,
+.employee-card__cta:focus-visible {
+  color: var(--brand-600);
+  text-decoration: underline;
+}
+
+.employee-card__cta:active {
+  transform: translateY(1px);
 }

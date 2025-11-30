@@ -13,7 +13,7 @@ export default function Header({ page = 'home', onNavigate }) {
   return (
     <header className="header">
       <div className="header__inner">
-        <h1 style={{ margin: 0, color: 'var(--brand)' }}>Лабораторна робота № 10</h1>
+        <h1 style={{ margin: 0, color: 'var(--brand)' }}>Лабораторна робота № 11</h1>
       </div>
       <nav className="nav" aria-label="Головна навігація">
         <a className="nav__link" href="#" aria-current={isCurrent('home')} onClick={event => go(event, 'home')}>
@@ -22,7 +22,7 @@ export default function Header({ page = 'home', onNavigate }) {
         <a className="nav__link" href="#" aria-current={isCurrent('about')} onClick={event => go(event, 'about')}>
           Про нас
         </a>
-        <a className="nav__link" href="#" onClick={event => event.preventDefault()}>
+        <a className="nav__link" href="#" aria-current={isCurrent('contacts')} onClick={event => go(event, 'contacts')}>
           Контакти
         </a>
         <div className="nav__actions">

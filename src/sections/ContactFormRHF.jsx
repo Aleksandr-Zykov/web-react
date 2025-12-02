@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigateCountdown } from '../hooks/useNavigateCountdown.js'
 
 const ENDPOINT = 'https://jsonplaceholder.typicode.com/posts'
 
 export default function ContactFormRHF() {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
+  const { secondsLeft, startCountdown } = useNavigateCountdown()
 
   const {
     register,
@@ -37,6 +39,20 @@ export default function ContactFormRHF() {
       console.log('JSONPlaceholder:', json)
       setStatus('success')
       reset()
+
+      const name = data.name?.trim()
+      const email = data.email?.trim()
+      const message = email
+        ? `Дякуємо, ${name || 'відвідувачу'}! Очікуйте лист на ${email}.`
+        : `Дякуємо, ${name || 'відвідувачу'}! Очікуйте на нашу відповідь.`
+
+      startCountdown(5, '/', {
+        replace: true,
+        state: {
+          from: 'contact-success',
+          message,
+        },
+      })
     } catch (err) {
       setError(err.message || 'Network error')
       setStatus('error')
@@ -105,6 +121,9 @@ export default function ContactFormRHF() {
       {(isSubmitting || status === 'loading') && <small className="text-blue-400">Надсилання...</small>}
       {status === 'error' && <small className="text-red-600">Помилка: {error}</small>}
       {status === 'success' && <small className="text-green-600">Відправлено! Перевір відповідь у консолі.</small>}
+      {secondsLeft !== null && (
+        <small className="text-green-600">Перенаправлення на головну через {secondsLeft} с…</small>
+      )}
     </form>
   )
 }

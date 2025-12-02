@@ -1,30 +1,37 @@
+import { NavLink } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext.jsx'
 
-export default function Header({ page = 'home', onNavigate }) {
-  const { theme, toggleTheme } = useTheme()
+const baseClass = 'nav__link'
 
-  const go = (event, to) => {
-    event.preventDefault()
-    onNavigate?.(to)
+function getNavLinkClass({ isActive, isPending }) {
+  let classes = baseClass
+  if (isPending) {
+    classes += ' nav__link--pending'
   }
+  if (isActive) {
+    classes += ' nav__link--active'
+  }
+  return classes
+}
 
-  const isCurrent = to => (page === to ? 'page' : undefined)
+export default function Header() {
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <header className="header">
       <div className="header__inner">
-        <h1 style={{ margin: 0, color: 'var(--brand)' }}>Лабораторна робота № 11</h1>
+        <h1 style={{ margin: 0, color: 'var(--brand)' }}>Лабораторна робота № 12</h1>
       </div>
       <nav className="nav" aria-label="Головна навігація">
-        <a className="nav__link" href="#" aria-current={isCurrent('home')} onClick={event => go(event, 'home')}>
+        <NavLink className={getNavLinkClass} to="/" end>
           Головна
-        </a>
-        <a className="nav__link" href="#" aria-current={isCurrent('about')} onClick={event => go(event, 'about')}>
+        </NavLink>
+        <NavLink className={getNavLinkClass} to="/about">
           Про нас
-        </a>
-        <a className="nav__link" href="#" aria-current={isCurrent('contacts')} onClick={event => go(event, 'contacts')}>
+        </NavLink>
+        <NavLink className={getNavLinkClass} to="/contacts">
           Контакти
-        </a>
+        </NavLink>
         <div className="nav__actions">
           <button
             type="button"

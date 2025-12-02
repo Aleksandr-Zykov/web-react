@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer__inner">
-        <p className="footer__brand">© {currentYear} Lab 11 by Zykov Oleksandr</p>
+        <p className="footer__brand">© {currentYear} Lab 12 by Zykov Oleksandr</p>
         <p className="footer__text">Побудовано на Vite + React</p>
       </div>
     </footer>

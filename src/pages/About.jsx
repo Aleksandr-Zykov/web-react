@@ -1,28 +1,39 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import EmployeeCard from '../components/EmployeeCard.jsx'
-import { useFetchEmployees } from '../hooks/useFetchEmployees.js'
-
-const ENDPOINT = 'https://jsonplaceholder.typicode.com/users'
+import { fetchEmployees } from '../features/employees/employeesThunks.js'
+import { selectEmployees } from '../features/employees/employeesSlice.js'
 
 export default function About() {
-  const { data, loading, error } = useFetchEmployees(ENDPOINT)
+  const dispatch = useDispatch()
+  const { items, status, error } = useSelector(selectEmployees)
   const [query, setQuery] = useState('')
 
-  const employees = useMemo(() => {
-    const items = Array.isArray(data) ? data : []
-    if (!query) return items
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchEmployees())
+    }
+  }, [status, dispatch])
+
+  const list = useMemo(() => {
+    const data = Array.isArray(items) ? items : []
+    if (!query) return data
     const normalized = query.toLowerCase()
 
-    return items.filter(user => {
+    return data.filter(user => {
       const name = user.name?.toLowerCase() ?? ''
       const company = user.company?.name?.toLowerCase() ?? ''
       return name.includes(normalized) || company.includes(normalized)
     })
-  }, [data, query])
+  }, [items, query])
 
   const handleSearch = event => {
     setQuery(event.target.value)
   }
+
+  const loading = status === 'loading'
+  const hasError = status === 'failed' && error
+  const noData = status === 'succeeded' && Array.isArray(list) && list.length === 0
 
   return (
     <section className="team" aria-labelledby="about-title">
@@ -45,13 +56,20 @@ export default function About() {
       </div>
 
       {loading && <p className="team__status">Завантаження…</p>}
-      {!loading && error && <p className="team__status team__status--error">Помилка: {error}</p>}
-      {!loading && !error && employees.length === 0 && (
+
+      {!loading && hasError && (
+        <div className="team__status team__status--error" role="alert">
+          Помилка: {error}
+        </div>
+      )}
+
+      {!loading && !hasError && noData && (
         <p className="team__status">Немає співробітників за вашим запитом.</p>
       )}
-      {!loading && !error && employees.length > 0 && (
+
+      {!loading && !hasError && Array.isArray(list) && list.length > 0 && (
         <div className="team__list">
-          {employees.map(user => (
+          {list.map(user => (
             <EmployeeCard key={user.id} user={user} />
           ))}
         </div>

@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
-import { useTheme } from '../context/ThemeContext.jsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectThemeMode, toggleTheme } from '../features/theme/themeSlice.js'
 
 const baseClass = 'nav__link'
 
@@ -15,12 +16,17 @@ function getNavLinkClass({ isActive, isPending }) {
 }
 
 export default function Header() {
-  const { theme, toggleTheme } = useTheme()
+  const dispatch = useDispatch()
+  const theme = useSelector(selectThemeMode)
+
+  const handleToggle = () => {
+    dispatch(toggleTheme())
+  }
 
   return (
     <header className="header">
       <div className="header__inner">
-        <h1 style={{ margin: 0, color: 'var(--brand)' }}>Лабораторна робота № 12</h1>
+        <h1 style={{ margin: 0, color: 'var(--brand)' }}>Лабораторна робота № 13</h1>
       </div>
       <nav className="nav" aria-label="Головна навігація">
         <NavLink className={getNavLinkClass} to="/" end>
@@ -36,7 +42,7 @@ export default function Header() {
           <button
             type="button"
             className="nav__link nav__link--cta"
-            onClick={toggleTheme}
+            onClick={handleToggle}
             title="Перемкнути тему"
           >
             {theme === 'light' ? 'Темна' : 'Світла'}

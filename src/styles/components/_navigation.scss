@@ -56,6 +56,10 @@
   background: rgba(0, 43, 92, 0.12);
 }
 
+.nav__link--pending {
+  opacity: 0.6;
+}
+
 .nav__link--cta {
   background: var(--brand);
   color: #fff;

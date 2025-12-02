@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useNavigateCountdown } from '../hooks/useNavigateCountdown.js'
 
 const ENDPOINT = '/echo/post'
 
 export default function ContactFormBasic() {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
+  const { secondsLeft, startCountdown } = useNavigateCountdown()
 
   async function onSubmit(event) {
     event.preventDefault()
@@ -26,6 +28,21 @@ export default function ContactFormBasic() {
       console.log('FormData echo:', json)
       setStatus('success')
       form.reset()
+
+      const name = fd.get('name')?.trim()
+      const email = fd.get('email')?.trim()
+      const displayName = name || 'відвідувачу'
+      const successText = email
+        ? `Дякуємо, ${displayName}! Ми зв’яжемося з вами на ${email}.`
+        : `Дякуємо, ${displayName}! Ми зв’яжемося з вами найближчим часом.`
+
+      startCountdown(5, '/', {
+        replace: true,
+        state: {
+          from: 'contact-success',
+          message: successText,
+        },
+      })
     } catch (err) {
       setError(err.message || 'Network error')
       setStatus('error')
@@ -81,6 +98,9 @@ export default function ContactFormBasic() {
       {status === 'loading' && <small className="text-blue-400">Надсилання...</small>}
       {status === 'error' && <small className="text-red-600">Помилка: {error}</small>}
       {status === 'success' && <small className="text-green-600">Відправлено! Перевір відповідь у консолі.</small>}
+      {secondsLeft !== null && (
+        <small className="text-green-600">Перенаправлення на головну через {secondsLeft} с…</small>
+      )}
     </form>
   )
 }

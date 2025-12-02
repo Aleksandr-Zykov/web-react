@@ -15,6 +15,28 @@
   color: var(--brand);
 }
 
+.main__alert {
+  margin: 0;
+  padding: abs.$space-3 abs.$space-4;
+  border-radius: abs.$radius-2;
+  border: 1px solid var(--brand-600);
+  background: color-mix(in srgb, var(--brand-100) 60%, transparent);
+  color: var(--brand-600);
+  font-weight: 600;
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  gap: abs.$space-3;
+}
+
+.not-found__code {
+  background: var(--brand-100);
+  padding: 0 abs.$space-2;
+  border-radius: abs.$radius-1;
+}
+
 .home__header {
   display: flex;
   align-items: center;
